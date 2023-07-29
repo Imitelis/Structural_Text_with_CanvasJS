@@ -73,17 +73,17 @@ function init() {
     particleArray = [];
     
     if (canvas.width < 920) {
-        adjustX = Math.floor(canvas.width * 0.0255)
-        adjustY = Math.floor(canvas.height * 0.0025)
+        adjustX = Math.floor(canvas.width * 0.0245)
+        adjustY = - Math.floor(canvas.height * 0.022)
         let fontSize = Math.max(Math.floor((canvas.width) * 0.032), 32);
         ctx.font = `${fontSize}px Georgia`;
         ctx.fillText('JS', 0, 32)
     } else {
-        adjustX = Math.floor(canvas.width * 0.0135)
-        adjustY = Math.floor(canvas.height * 0.0295)
-        let fontSize = Math.min(Math.floor((canvas.width) * 0.020), 20);
+        adjustX = Math.floor(canvas.width * 0.0055)
+        adjustY = Math.floor(canvas.height * 0.0245)
+        let fontSize = Math.min(Math.floor((canvas.width) * 0.022), 22);
         ctx.font = `${fontSize}px Georgia`;
-        ctx.fillText('JavaScript', 0, 20)
+        ctx.fillText('JavaScript', 0, 22)
     }
     
     let textCoordinates = ctx.getImageData(0, 0, canvas.width, canvas.height)
