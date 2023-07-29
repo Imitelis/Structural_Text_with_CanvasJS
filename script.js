@@ -4,8 +4,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particleArray = [];
-let adjustX = 7.5;
-let adjustY = 18;
+let adjustX = Math.floor(canvas.width * 0.00945)
+let adjustY = Math.floor(canvas.height * 0.0345)
 let startColor = [128, 0, 0];
 let endColor = [51, 51, 0]; 
 
@@ -20,12 +20,6 @@ function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
 })
-
-
-ctx.font = '22px Georgia';
-ctx.fillText('JavaScript', 0, 20)
-
-const textCoordinates = ctx.getImageData(0, 0, 200, 200)
 
 class Particle {
     constructor(x, y){
@@ -77,6 +71,23 @@ class Particle {
 
 function init() {
     particleArray = [];
+    
+    if (canvas.width < 920) {
+        adjustX = Math.floor(canvas.width * 0.0285)
+        adjustY = Math.floor(canvas.height * 0.0125)
+        let fontSize = Math.max(Math.floor((canvas.width) * 0.032), 32);
+        ctx.font = `${fontSize}px Georgia`;
+        ctx.fillText('JS', 0, 24)
+    } else {
+        adjustX = Math.floor(canvas.width * 0.00945)
+        adjustY = Math.floor(canvas.height * 0.0295)
+        let fontSize = Math.max(Math.floor((canvas.width) * 0.016), 16);
+        ctx.font = `${fontSize}px Georgia`;
+        ctx.fillText('JavaScript', 0, 16)
+    }
+    
+    let textCoordinates = ctx.getImageData(0, 0, canvas.width, canvas.height)
+
     for (let y = 0, y2 = textCoordinates.height; y < y2; y++){
         for(let x = 0, x2 = textCoordinates.width; x < x2; x++){
             if (textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3]  > 128){
@@ -129,3 +140,10 @@ function connect(){
         }
     }
 }
+
+window.addEventListener('resize',
+function(){
+    canvas.width = this.innerWidth;
+    canvas.height = this.innerHeight;
+    init();
+})
