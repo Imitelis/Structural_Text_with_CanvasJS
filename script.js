@@ -79,11 +79,11 @@ function init() {
         ctx.font = `${fontSize}px Georgia`;
         ctx.fillText('JS', 0, 24)
     } else {
-        adjustX = Math.floor(canvas.width * 0.00945)
+        adjustX = Math.floor(canvas.width * 0.0135)
         adjustY = Math.floor(canvas.height * 0.0295)
-        let fontSize = Math.max(Math.floor((canvas.width) * 0.016), 16);
+        let fontSize = Math.min(Math.floor((canvas.width) * 0.018), 18);
         ctx.font = `${fontSize}px Georgia`;
-        ctx.fillText('JavaScript', 0, 16)
+        ctx.fillText('JavaScript', 0, 18)
     }
     
     let textCoordinates = ctx.getImageData(0, 0, canvas.width, canvas.height)
