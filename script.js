@@ -4,13 +4,15 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particleArray = [];
-let adjustX = 6;
-let adjustY = 12;
+let adjustX = 7.5;
+let adjustY = 18;
+let startColor = [128, 0, 0];
+let endColor = [51, 51, 0]; 
 
 let mouse = {
     x: null,
     y: null,
-    radius: 90 // (canvas.height/80) * (canvas.width/80)
+    radius: Math.floor((canvas.height/90) * (canvas.width/90))
 }
 
 window.addEventListener('mousemove',
@@ -19,19 +21,11 @@ function(event) {
     mouse.y = event.y;
 })
 
-ctx.fillStyle = 'white'
-ctx.font = '18px Verdana';
-ctx.fillText('JavaScript', 0, 20)
-ctx.strokeStyle = 'white'
-ctx.strokeRect(0, 0, 100, 100)
-const textCoordinates = ctx.getImageData(0, 0, 200, 200)
 
-function getRandomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgb(${r}, ${g}, ${b})`;
-  }
+ctx.font = '22px Georgia';
+ctx.fillText('JavaScript', 0, 20)
+
+const textCoordinates = ctx.getImageData(0, 0, 200, 200)
 
 class Particle {
     constructor(x, y){
@@ -43,7 +37,12 @@ class Particle {
         this.density = (Math.random() * 40) + 5; 
     }
     draw(){
-        ctx.fillStyle = getRandomColor();
+        let interpolationFactor = this.x / canvas.width;
+        let colorR = Math.round(startColor[0] + interpolationFactor * (endColor[0] - startColor[0]));
+        let colorG = Math.round(startColor[1] + interpolationFactor * (endColor[1] - startColor[1]));
+        let colorB = Math.round(startColor[2] + interpolationFactor * (endColor[2] - startColor[2]));
+
+        ctx.fillStyle = `rgba(${colorR}, ${colorG}, ${colorB})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.closePath();
@@ -59,6 +58,7 @@ class Particle {
         let force = (maxDistance - distance) / maxDistance;
         let directionX = forceDirectionX * force * this.density;
         let directionY = forceDirectionY * force * this.density;
+        
         if (distance < mouse.radius) {
             this.x -= directionX;
             this.y -= directionY;
@@ -82,6 +82,7 @@ function init() {
             if (textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3]  > 128){
                 let positionX = x + adjustX;
                 let positionY = y + adjustY;
+                
                 particleArray.push(new Particle(positionX * 10, positionY * 10))
             }
         }
@@ -108,8 +109,15 @@ function connect(){
             let dx = particleArray[a].x - particleArray[b].x;
             let dy = particleArray[a].y - particleArray[b].y;
             let distance = Math.sqrt(dx * dx + dy * dy)
+            
             opacityValue = 1 - (distance/20);
-            ctx.strokeStyle = 'rgba(255, 255, 255,' + opacityValue + ')';
+
+            let interpolationFactor = particleArray[a].x / canvas.width;
+            let colorR = Math.round(startColor[0] + interpolationFactor * (endColor[0] - startColor[0]));
+            let colorG = Math.round(startColor[1] + interpolationFactor * (endColor[1] - startColor[1]));
+            let colorB = Math.round(startColor[2] + interpolationFactor * (endColor[2] - startColor[2]));
+
+            ctx.strokeStyle = `rgba(${colorR}, ${colorG}, ${colorB}, ${opacityValue})`;
 
             if (distance < 20){
                 ctx.lineWidth = 2;

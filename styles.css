@@ -6,11 +6,12 @@
 
 body {
     overflow: hidden;
-    background: black;
+    background-image: radial-gradient(white 0%, khaki 100%);
+	background-attachment: fixed;
 }
 
 #canvas {
-    position: absolute;
+    position: static;
     top: 0;
     left: 0;
     width: 100%;
