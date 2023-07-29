@@ -73,8 +73,8 @@ function init() {
     particleArray = [];
     
     if (canvas.width < 920) {
-        adjustX = Math.floor(canvas.width * 0.0275)
-        adjustY = Math.floor(canvas.height * 0.0105)
+        adjustX = Math.floor(canvas.width * 0.0255)
+        adjustY = Math.floor(canvas.height * 0.0085)
         let fontSize = Math.max(Math.floor((canvas.width) * 0.028), 28);
         ctx.font = `${fontSize}px Georgia`;
         ctx.fillText('JS', 0, 28)
