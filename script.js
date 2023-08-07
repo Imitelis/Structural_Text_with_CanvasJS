@@ -4,8 +4,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particleArray = [];
-let adjustX = Math.floor(canvas.width * 0.00945)
-let adjustY = Math.floor(canvas.height * 0.0345)
+let adjustX = 7.5;
+let adjustY = 18;
 let startColor = [128, 0, 0];
 let endColor = [51, 51, 0]; 
 
@@ -71,21 +71,27 @@ class Particle {
 
 function init() {
     particleArray = [];
-    
+
     if (canvas.width < 920) {
-        adjustX = Math.floor(canvas.width * 0.0245)
-        adjustY = - Math.floor(canvas.height * 0.022)
+        adjustX = Math.floor(canvas.width * 0.0295)
+        adjustY = - Math.floor(canvas.height * 0.0125)
         let fontSize = Math.max(Math.floor((canvas.width) * 0.032), 32);
         ctx.font = `${fontSize}px Georgia`;
         ctx.fillText('JS', 0, 32)
-    } else {
-        adjustX = Math.floor(canvas.width * 0.0055)
-        adjustY = Math.floor(canvas.height * 0.0245)
+    } else if (canvas.width >= 920 && canvas.width < 1920) {
+        adjustX = Math.floor(canvas.width * 0.0075)
+        adjustY = Math.floor(canvas.height * 0.0295)
         let fontSize = Math.min(Math.floor((canvas.width) * 0.022), 22);
         ctx.font = `${fontSize}px Georgia`;
         ctx.fillText('JavaScript', 0, 22)
+    } else {
+        adjustX = Math.floor(canvas.width * 0.0245)
+        adjustY = Math.floor(canvas.height * 0.0365)
+        let fontSize = 22;
+        ctx.font = `${fontSize}px Georgia`;
+        ctx.fillText('JavaScript', 0, 22)
     }
-    
+
     let textCoordinates = ctx.getImageData(0, 0, canvas.width, canvas.height)
 
     for (let y = 0, y2 = textCoordinates.height; y < y2; y++){
