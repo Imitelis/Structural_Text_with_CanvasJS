@@ -4,8 +4,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particleArray = [];
-let adjustX = 7.5;
-let adjustY = 18;
+let adjustX = Math.floor(canvas.width * 0.0185);
+let adjustY = Math.floor(canvas.height * 0.0195);
 let startColor = [128, 0, 0];
 let endColor = [51, 51, 0]; 
 
